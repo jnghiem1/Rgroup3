@@ -8,3 +8,22 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+##3. The team chose this data set because we are interested to see how education level impacts a person's earning ability and if there’s any correlation between the two. As MBA students, it would be interesting how big or small the difference we can expect in terms of salary once we are done with the program. 
+```{r}
+library(readr)
+library(data.table)
+library(readxl)
+##Step 3
+##1. 
+group_project_data <- fread ("wages_by_education.csv") 
+##Is this data tidy? If not, which principles of tidy data does your data set violate?
+##2. List the variables and their data types.
+group_project_data
+class(group_project_data)
+mode(group_project_data)
+##3. Examine the structure of the data set.
+str(group_project_data)
+##4. Show the dimensions of the data set. 50 rows and 61 columns. 
+nrow(group_project_data)
+ncol(group_project_data)
