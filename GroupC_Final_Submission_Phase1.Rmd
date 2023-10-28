@@ -41,6 +41,7 @@ sum(is.na(group_project_data))
 ##7. How many missing values are there in each column?
 is.na.data.frame(group_project_data)
 ##8. Summarize what cleaning/transforming needs to be done. 
+##First, the Year format needs to be converted to show year only.  Second, the data will be sorted based on the team's interest (for example: by Educational Attainment, Gender, Age, and Personal Income).  Another column can also be created to combine the previously mentioned attributes. 
 
 ```
 
