@@ -23,7 +23,7 @@ library(readxl)
 ##1. 
 group_project_data <- fread ("ca-educational-attainment-personal-income-2008-2014.csv") 
 View(group_project_data)
-##Is this data tidy? If not, which principles of tidy data does your data set violate?
+##The data set is almost tidy since there are some missing data under a column. Also, the format of the year column includes date and time. It can be transformed to year only.   
 ##2. List the variables and their data types.
 group_project_data
 class(group_project_data)
@@ -33,6 +33,15 @@ str(group_project_data)
 ##4. Show the dimensions of the data set. 50 rows and 61 columns. 
 nrow(group_project_data)
 ncol(group_project_data)
+##5. Show the first 6 rows and the last 6 rows of data set. 
+head(group_project_data)
+tail(group_project_data)
+##6.Identify how many missing values are in your data set?
+sum(is.na(group_project_data)) 
+##7. How many missing values are there in each column?
+is.na.data.frame(group_project_data)
+##8. Summarize what cleaning/transforming needs to be done. 
+
 ```
 
 ```{r}
