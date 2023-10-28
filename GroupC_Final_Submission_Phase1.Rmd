@@ -5,7 +5,7 @@ date: "`r Sys.Date()`"
 output: html_document
 ---
 ##Step 1
-##Our group decided to use the raw dataset about salary based on different categorie that we downloaded from kaggle.com. 
+##The group decided to use the raw dataset about salary based on different categorie that we downloaded from kaggle.com. 
 
 ##Step 2
 ##1. The data set our group is going to use is about wages under different categories such as: age, gender, and educational background. 
@@ -23,7 +23,7 @@ library(readxl)
 ##1. 
 group_project_data <- fread ("ca-educational-attainment-personal-income-2008-2014.csv") 
 View(group_project_data)
-##The data set is almost tidy since there are some missing data under a column. Also, the format of the year column includes date and time. It can be transformed to year only.   
+##The data set is almost tidy. There are some missing value in a column. Also, the format of the column includes date and time. It can be transformed to year only.   
 ##2. List the variables and their data types.
 group_project_data
 class(group_project_data)
@@ -41,7 +41,7 @@ sum(is.na(group_project_data))
 ##7. How many missing values are there in each column?
 is.na.data.frame(group_project_data)
 ##8. Summarize what cleaning/transforming needs to be done. 
-##First, the Year format needs to be converted to show year only.  Second, the data will be sorted based on the team's interest (for example: by Educational Attainment, Gender, Age, and Personal Income).  Another column can also be created to combine the previously mentioned attributes. 
+##First, the Year format needs to be converted to show year only.  Second, the data will be sorted based on the team's interest (for example: by Educational Attainment, by Gender, by Age, and by Personal Income).  Another column can also be created to combine the previously mentioned attributes. 
 
 ```
 
