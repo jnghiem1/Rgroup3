@@ -26,25 +26,33 @@ library(readxl)
   STEP 3 -->
 
 ```{r}
+
 group_project_data <- read_xlsx ("structured-sales-data-1.xlsx") 
 View(group_project_data)
-## (1)  The data set is dirty and badly structured. There are some missing value in some column and the Order ID field includes country and            year.   
+## (1)  The data set is dirty and badly structured. There are some missing value in some column and the Order ID field includes country and            year. 
+
 ## (2)  List the variables and their data types.
 group_project_data
 class(group_project_data)
 mode(group_project_data)
+
 ## (3)  Examine the structure of the data set.
 str(group_project_data)
+
 ## (4)  Show the dimensions of the data set. 50 rows and 61 columns. 
 nrow(group_project_data)
 ncol(group_project_data)
+
 ## (5)  Show the first 6 rows and the last 6 rows of data set. 
 head(group_project_data)
 tail(group_project_data)
+
 ## (6)  Identify how many missing values are in your data set?
 sum(is.na(group_project_data)) 
+
 ## (7)  How many missing values are there in each column?
 is.na.data.frame(group_project_data)
+
 ## (8) Summarize what cleaning/transforming needs to be done. 
 ## The rows for the 3 segments need to be aligned and differentiated by their segment names  
 ## Secondly, the year and country fields need to be extracted from the Order ID.
