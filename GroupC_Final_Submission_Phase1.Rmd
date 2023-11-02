@@ -1,6 +1,6 @@
 ---
-title: "Final Submission Phase1"
-author: "Julma Nghiem,Oye Oyegbami,Vishal Raina,Alvina Cheung"
+title: "Final Submission Phase 1"
+author: "Julma Nghiem, Oye Oyegbami, Vishal Raina, Alvina Cheung"
 date: "`r Sys.Date()`"
 output: html_document
 ---
@@ -12,40 +12,43 @@ library(data.table)
 library(readxl)
 ```
 
-<!-- STEP 1 
-     The group decided to use a badly structured raw dataset about shipping mode orders based on 3 different segments.
+<!-- 
+  STEP 1 
+  The group decided to use a badly structured raw dataset about shipping mode orders based on 3 different segments.
 
-<!-- STEP 2
-     (1)  The data set our group is going to use is about orders under different segments such as: consumer, corporate, and home office.
-     (2)  The data was obtained from the website https://foresightbi.com.ng/microsoft-power-bi/dirty-data-samples-to-practice-on/
+  STEP 2
+  (1)  The data set our group is going to use is about orders under different segments such as: consumer, corporate, and home office.
+  (2)  The data was obtained from the website https://foresightbi.com.ng/microsoft-power-bi/dirty-data-samples-to-practice-on/
 
-     (3)  The team chose this data set because we are interested to see how a badly structured dataset can be transformed and cleaned. 
-          The orders list has a primary key of Order ID, extracted accros 2 countries, spanning a 5-year period. We would like to analyse the            cleaned data to determine how well each segment is doing as well as track marketing trends by location and shipping modes -->
+  (3)  The team chose this data set because we are interested to see how a badly structured dataset can be transformed and cleaned. 
+       The orders list has a primary key of Order ID, extracted accros 2 countries, spanning a 5-year period. We would like to analyse the            cleaned data to determine how well each segment is doing as well as track marketing trends by location and shipping modes 
 
-<!-- STEP 3 -->
+  STEP 3 -->
 
 ```{r}
-group_project_data <- fread ("structured-sales-data-1.csv") 
+group_project_data <- read_xlsx ("structured-sales-data-1.xlsx") 
 View(group_project_data)
-###  (1). The data set is dirty and badly structured. There are some missing value in some column and the OrderID field includes country and             year.   
-##2. List the variables and their data types.
+## (1)  The data set is dirty and badly structured. There are some missing value in some column and the Order ID field includes country and            year.   
+## (2)  List the variables and their data types.
 group_project_data
 class(group_project_data)
 mode(group_project_data)
-##3. Examine the structure of the data set.
+## (3)  Examine the structure of the data set.
 str(group_project_data)
-##4. Show the dimensions of the data set. 50 rows and 61 columns. 
+## (4)  Show the dimensions of the data set. 50 rows and 61 columns. 
 nrow(group_project_data)
 ncol(group_project_data)
-##5. Show the first 6 rows and the last 6 rows of data set. 
+## (5)  Show the first 6 rows and the last 6 rows of data set. 
 head(group_project_data)
 tail(group_project_data)
-##6.Identify how many missing values are in your data set?
+## (6)  Identify how many missing values are in your data set?
 sum(is.na(group_project_data)) 
-##7. How many missing values are there in each column?
+## (7)  How many missing values are there in each column?
 is.na.data.frame(group_project_data)
-##8. Summarize what cleaning/transforming needs to be done. 
-##First, the Year format needs to be converted to show year only.  Second, the data will be sorted based on the team's interest (for example: by Educational Attainment, by Gender, by Age, and by Personal Income).  Another column can also be created to combine the previously mentioned attributes. 
+## (8) Summarize what cleaning/transforming needs to be done. 
+## The rows for the 3 segments need to be aligned and differentiated by their segment names  
+## Secondly, the year and country fields need to be extracted from the Order ID.
+## Thirdly, the totals and subtotals accross each shipping mode computed
 
 ```
 
