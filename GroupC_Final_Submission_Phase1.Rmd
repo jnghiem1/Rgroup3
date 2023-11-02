@@ -13,22 +13,21 @@ library(readxl)
 ```
 
 <!-- STEP 1 
-     The group decided to use a badly structured raw dataset about orders based on 3 different categories.
-
+     The group decided to use a badly structured raw dataset about shipping mode orders based on 3 different segments.
 
 <!-- STEP 2
-     (1)  The data set our group is going to use is about orders under different categories such as: consumer, corporate, and home office.
+     (1)  The data set our group is going to use is about orders under different segments such as: consumer, corporate, and home office.
      (2)  The data was obtained from the website https://foresightbi.com.ng/microsoft-power-bi/dirty-data-samples-to-practice-on/
 
-     (3)  The team chose this data set because we are interested to see how a badly structured dataset can be transformed and cleaned. The orders              list has a primary key of Order ID, extracted accross 2 countries, spaning a 5-year period. We would like to analyse the cleaned data
-          to determine how well each segment is doing as well as track marketing trends-->
+     (3)  The team chose this data set because we are interested to see how a badly structured dataset can be transformed and cleaned. 
+          The orders list has a primary key of Order ID, extracted accros 2 countries, spanning a 5-year period. We would like to analyse the            cleaned data to determine how well each segment is doing as well as track marketing trends by location and shipping modes -->
 
 <!-- STEP 3 -->
 
 ```{r}
 group_project_data <- fread ("structured-sales-data-1.csv") 
 View(group_project_data)
-##1. The data set is almost tidy. There are some missing value in a column. Also, the format of the column includes date and time. It can be transformed to year only.   
+###  (1). The data set is dirty and badly structured. There are some missing value in some column and the OrderID field includes country and             year.   
 ##2. List the variables and their data types.
 group_project_data
 class(group_project_data)
