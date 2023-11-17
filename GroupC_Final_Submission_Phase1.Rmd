@@ -13,8 +13,20 @@ library(readxl)
 ```
 
 <!-- 
-  STEP 1 
-  The group decided to use a badly structured raw dataset about shipping mode orders based on 3 different segments.
+   STEP 1 
+   
+The data set provides information on orders placed between 2011 and 2014 in 2 countries by 3 segments of consumers:
+  (1) Consumer
+  (2) Corporate
+  (3) Home Office
+
+Each order placed was shipped using one of the 4 shipping modes outlined:
+  (1) First Class 
+  (2) Same Day
+  (3) Second Class
+  (4) Standard Class
+
+The order entries originated from 2 countries, United States (US) and Canada (CA). The first two characters of the order ID indicates the country the order was placed. The four digits following the dash separating the country code represents the year the order was placed, and the last 6 digits represents the order ID.  
 
   STEP 2
   (1)  The data set our group is going to use is about orders under different segments such as: consumer, corporate, and home office.
