@@ -56,7 +56,7 @@ is.na.data.frame(group_project_data)
 ## (8) Summarize what cleaning/transforming needs to be done. 
 ## The rows for the 3 segments need to be aligned and differentiated by their segment names  
 ## Secondly, the year and country fields need to be extracted from the Order ID.
-## Thirdly, the totals and subtotals accross each shipping mode computed
+## Thirdly, the totals and subtotals across each shipping mode computed
 
 ```
 
