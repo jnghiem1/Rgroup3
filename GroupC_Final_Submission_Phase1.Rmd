@@ -10,10 +10,13 @@ knitr::opts_chunk$set(echo = TRUE)
 library(readr)
 library(data.table)
 library(readxl)
+library(dplyr)
+library(DataExplorer)
+library(tidyr)
+library(ggplot2)
 ```
 
-<!-- 
-   STEP 1 
+STEP 1 
    
 The data set provides information on orders placed between 2011 and 2014 in 2 countries by 3 segments of consumers:
   (1) Consumer
@@ -35,12 +38,16 @@ The order entries originated from 2 countries, United States (US) and Canada (CA
   (3)  The team chose this data set because we are interested to see how a badly structured dataset can be transformed and cleaned. 
        The orders list has a primary key of Order ID, extracted accros 2 countries, spanning a 5-year period. We would like to analyse the            cleaned data to determine how well each segment is doing as well as track marketing trends by location and shipping modes 
 
-  STEP 3 -->
+  STEP 3
 
 ```{r}
 
 group_project_data <- read_xlsx ("structured-sales-data-1.xlsx") 
 View(group_project_data)
+
+
+plot_missing(group_project_data)
+
 ## (1)  The data set is dirty and badly structured. There are some missing value in some column and the Order ID field includes country and            year. 
 
 ## (2)  List the variables and their data types.
@@ -71,7 +78,4 @@ is.na.data.frame(group_project_data)
 ## Thirdly, the totals and subtotals across each shipping mode computed
 
 ```
-
-```{r}
-
 
