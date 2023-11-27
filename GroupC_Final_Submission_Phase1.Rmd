@@ -84,7 +84,7 @@ is.na.data.frame(group_project_data)
   (50 points): Clean and Tidy the data Apply the principles of tidy data
 and clean the data. Note: This can entail some of the following (not everything
 listed below is required):
-• Performing any coercions (such as changing the variable data type to integer/numeric/factor.)
+• Performing any coercions (such as changing the variable data type to integer/numeric/factor.)
 • Using the tidyr package or the dplyr package in R.
 • Using basic imputation techniques to deal with missing values.
 • Apply other ways to tidy the data like splitting and uniting columns.
@@ -93,6 +93,15 @@ listed below is required):
 
 ```{r}
 
+## Deletion of row 2 (Order ID). This row only contains the sub-name or column title for 1st column aka Segment. 
+
+## Separate ORDER ID into three columns (Country, Year, Order ID)
+
+## Deletion of Consumer Total, Corporate Total, and Home Office Total columns.  
+
+## Gather or PIVOT-LONGER to combine segments: Consumer, Corporate, Home Office. 
+
+## No mutation is needed.  NAs should be treated as zero or MAR.  
 
 ```
 
