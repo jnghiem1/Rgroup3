@@ -78,15 +78,6 @@ is.na.data.frame(group_project_data)
 
   STEP 4 
   
-  (50 points): Clean and Tidy the data Apply the principles of tidy data
-and clean the data. Note: This can entail some of the following (not everything
-listed below is required):
-• Performing any coercions (such as changing the variable data type to integer/numeric/factor.)
-• Using the tidyr package or the dplyr package in R.
-• Using basic imputation techniques to deal with missing values.
-• Apply other ways to tidy the data like splitting and uniting columns.
-• Any other techniques covered or not covered in the course
-
 ## Change columns name.  Need help in changing column names.  
 
 group_project_data_nototal2 %>% rename(Consumer_FirstClass=Consumer, Consumer_SameDayClass=...3, Consumer_SecondClass=...4, ...5=Consumer_StandardClass, Corporate_FirstClass=Corporate, Corporate_SameDayClass=...8, Corporate_SecondClass...9, Corporate_StandardClass=...10, HomeOffice_FirstClass=`Home Office`, HomeOffice_SameDayClass=...13, HomeOffice_SecondClass=...14,HomeOffice_StandardClass= ...15)
@@ -119,6 +110,9 @@ separate (group_project_data_nototal3, "Segment>>", into = c("Country", "Year", 
 
 group_project_data_nototal3$Price <- as.numeric(group_project_data_nototal3$Price)
 str(group_project_data_nototal3)
+
+## Remove all NAs in Price column.  
+
 
 ```
 
