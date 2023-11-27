@@ -101,8 +101,6 @@ listed below is required):
 
 ## Gather or PIVOT-LONGER to combine segments: Consumer, Corporate, Home Office. 
 
-## No mutation is needed.  NAs should be treated as zero or MAR.  
-
 ```
 
   STEP 5 
