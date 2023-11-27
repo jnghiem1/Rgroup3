@@ -11,7 +11,6 @@ library(readr)
 library(data.table)
 library(readxl)
 library(dplyr)
-library(DataExplorer)
 library(tidyr)
 library(ggplot2)
 ```
@@ -45,8 +44,6 @@ The order entries originated from 2 countries, United States (US) and Canada (CA
 group_project_data <- read_xlsx ("structured-sales-data-1.xlsx") 
 View(group_project_data)
 
-
-plot_missing(group_project_data)
 
 ## (1)  The data set is dirty and badly structured. There are some missing value in some column and the Order ID field includes country and            year. 
 
@@ -93,13 +90,31 @@ listed below is required):
 
 ```{r}
 
-## Deletion of row 2 (Order ID). This row only contains the sub-name or column title for 1st column aka Segment. 
+## Deletion of columns Consumer Total, Corporate Total, and Home Office Total. 
+
+group_project_data_nototal <- group_project_data %>% select(-`Consumer Total`, -`Corporate Total`, - `Home Office Total`)
+group_project_data_nototal
+
+##Deletion of row 2 and 3 (Order ID). This row only contains the sub-name or column title for 1st column aka Segment. 
+
+group_project_data_nototal2 <- group_project_data_nototal [-c(1:2),]
+group_project_data_nototal2
+
+## Gather or PIVOT-LONGER to combine segments: Consumer, Corporate, Home Office. 
+
+group_project_data_nototal3 <- gather(group_project_data_nototal2, key = "Segments", value = "Price", "Consumer":"...15")
+group_project_data_nototal3
 
 ## Separate ORDER ID into three columns (Country, Year, Order ID)
 
-## Deletion of Consumer Total, Corporate Total, and Home Office Total columns.  
+separate (group_project_data_nototal3, "Segment>>", into = c("Country", "Year", "Order ID"), sep = "-")
 
-## Gather or PIVOT-LONGER to combine segments: Consumer, Corporate, Home Office. 
+## Convert Price (chr) to numberic. 
+
+group_project_data_nototal3$Price <- as.numeric(group_project_data_nototal3$Price)
+str(group_project_data_nototal3)
+
+
 
 ```
 
