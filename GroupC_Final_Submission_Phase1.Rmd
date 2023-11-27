@@ -87,6 +87,10 @@ listed below is required):
 • Apply other ways to tidy the data like splitting and uniting columns.
 • Any other techniques covered or not covered in the course
 
+## Change columns name.  Need help in changing column names.  
+
+group_project_data_nototal2 %>% rename(Consumer_FirstClass=Consumer, Consumer_SameDayClass=...3, Consumer_SecondClass=...4, ...5=Consumer_StandardClass, Corporate_FirstClass=Corporate, Corporate_SameDayClass=...8, Corporate_SecondClass...9, Corporate_StandardClass=...10, HomeOffice_FirstClass=`Home Office`, HomeOffice_SameDayClass=...13, HomeOffice_SecondClass=...14,HomeOffice_StandardClass= ...15)
+
 
 ```{r}
 
@@ -99,6 +103,8 @@ group_project_data_nototal
 
 group_project_data_nototal2 <- group_project_data_nototal [-c(1:2),]
 group_project_data_nototal2
+
+## Change columns name.  
 
 ## Gather or PIVOT-LONGER to combine segments: Consumer, Corporate, Home Office. 
 
@@ -113,8 +119,6 @@ separate (group_project_data_nototal3, "Segment>>", into = c("Country", "Year", 
 
 group_project_data_nototal3$Price <- as.numeric(group_project_data_nototal3$Price)
 str(group_project_data_nototal3)
-
-
 
 ```
 
