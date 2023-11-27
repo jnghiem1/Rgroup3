@@ -79,3 +79,63 @@ is.na.data.frame(group_project_data)
 
 ```
 
+  STEP 4 
+  
+  (50 points): Clean and Tidy the data Apply the principles of tidy data
+and clean the data. Note: This can entail some of the following (not everything
+listed below is required):
+• Performing any coercions (such as changing the variable data type to integer/numeric/factor.)
+• Using the tidyr package or the dplyr package in R.
+• Using basic imputation techniques to deal with missing values.
+• Apply other ways to tidy the data like splitting and uniting columns.
+• Any other techniques covered or not covered in the course
+
+
+```{r}
+
+
+```
+
+  STEP 5 
+  
+  (30 points): Perform Exploratory Data Analysis (EDA)
+1. Run the summary of the variables in the data set.
+2. Learn about the data visually by plotting whichever plot from the list below
+applies:
+a) Bar plot
+b) Histogram
+c) Box plot
+d) Scatter plot
+3. Summarize your findings from the various plots and tables.
+4. Uncover new information in the data that is not self-evident (i.e. besides
+plotting the data as above, slice and dice the data in different ways, create
+new variables, or join separate data frames to create new summary information).
+
+
+```{r}
+
+
+```
+
+  STEP 6
+
+  (35 points): Inferences Apply some inferential statistics techniques
+covered in Week 10 and in your statistics courses.
+
+
+```{r}
+
+
+```
+  
+  STEP 7
+
+  (35 points):  Predictive Analytics/Modeling Apply some predictive
+analytics/modeling techniques covered in Week 10 and in your statistics courses.
+
+
+```{r}
+
+
+```
+  
