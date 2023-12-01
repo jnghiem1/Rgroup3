@@ -85,7 +85,7 @@ is.na.data.frame(group_project_data)
 group_project_data_nototal <- group_project_data %>% select(-`Consumer Total`, -`Corporate Total`, - `Home Office Total`) 
 View(group_project_data_nototal)
 
-##Deletion of row 2 and 3 (Order ID). This row only contains the sub-name or column title for 1st column aka Segment. 
+## Deletion of row 2 and 3 (Order ID). This row only contains the sub-name or column title for 1st column aka Segment. 
 
 group_project_data_nototal2 <- group_project_data_nototal [-c(1:2,825),]
 
@@ -140,6 +140,7 @@ new variables, or join separate data frames to create new summary information).
 
 ```{r}
 
+TESTING
 
 ```
 
