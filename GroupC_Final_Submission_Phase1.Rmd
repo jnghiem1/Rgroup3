@@ -114,9 +114,11 @@ group_project_data_nototal_final <- group_project_data_nototal3[!is.na(group_pro
 ## Separate segment to country, year, and order iD. 
 
 group_project_data_nototal_final <- separate (group_project_data_nototal_final, "Segment>>", into = c("Country", "Year", "Order ID"), sep = "-")
-View(group_project_data_nototal_final)
 
 ## For country column, it is either in the United States of Canada.  
+
+group_project_data_nototal_final <- separate (group_project_data_nototal_final, "Segment", into = c("Segment", "Ship Order"), sep = "_")
+View(group_project_data_nototal_final)
 
 ```
 
