@@ -358,38 +358,150 @@ Cheung</h4>
 </div>
 
 
-<p>Introduction to the Structured Sales Data Our dataset presents a
-comprehensive view into the sales dynamics of a retail or e-commerce
-business. It’s a rich compilation of transactional data, meticulously
-structured to provide insights across various customer segments and
-shipping modes. This dataset is a valuable resource for understanding
-consumer behavior, optimizing sales strategies, and enhancing
-operational efficiency.</p>
-<p>Key Features of the Dataset: Segmentation: The data is categorized
-into distinct customer segments – Consumer, Corporate, and Home Office.
-This segmentation allows for a detailed analysis of purchasing patterns
-and preferences across different types of customers.</p>
-<p>Shipping Modes: With categories like First Class, Same Day, Second
-Class, and Standard Class, the dataset provides an in-depth look at the
-shipping preferences of customers. This aspect is crucial for optimizing
-logistics and enhancing customer satisfaction.</p>
-<p>Order Details: Each row in the dataset represents a unique order,
-identified by an ‘Order ID’. This granular level of detail supports a
-thorough exploration of individual sales transactions.</p>
-<p>Numerical Insights: The dataset contains numerical values that could
-represent sales figures, quantities, or other financial metrics. These
-numbers are key to performing quantitative analyses such as sales
-performance evaluation, profitability assessment, and trend
-analysis.</p>
-<p>Potential Applications: Strategic Decision Making: The dataset is an
-invaluable tool for making informed decisions about marketing, sales,
-and distribution strategies. Market Trend Analysis: It offers a
-foundation for analyzing market trends, customer preferences, and
-seasonal variations in sales. Operational Optimization: Insights derived
-from shipping mode preferences can help optimize logistics and
-distribution networks. Customer Segmentation Analysis: Understanding the
-distinct characteristics and needs of different customer segments can
-lead to more targeted and effective marketing campaigns.</p>
+<div id="step-1-introduction-to-the-data-set" class="section level3">
+<h3>Step 1: Introduction to the Data Set</h3>
+</div>
+<div id="introduction" class="section level1">
+<h1>Introduction:</h1>
+<p>The dataset consists of structured sales data from a retail or
+e-commerce business. It includes information on customer segments,
+shipping modes, and order details, providing a detailed overview of
+sales transactions.</p>
+<p>##Data Source:</p>
+<p>&lt;<TODO Oye will be providing data source here>&gt;</p>
+<p>#Choice of Data Set:</p>
+<p>This data set was chosen because it offers a variety of opportunities
+for tidying, exploratory data analysis (EDA), and statistical
+inferences. The dataset’s complexity in terms of customer segmentation
+and shipping modes makes it an ideal candidate for applying diverse data
+analysis techniques.</p>
+<div id="data-prepration" class="section level2">
+<h2>Data Prepration</h2>
+<pre class="r"><code>library(readxl)
+# Load the dataset
+data &lt;- read_excel(&quot;structured-sales-data-1.xlsx&quot;)</code></pre>
+<pre><code>## New names:
+## • `` -&gt; `...3`
+## • `` -&gt; `...4`
+## • `` -&gt; `...5`
+## • `` -&gt; `...8`
+## • `` -&gt; `...9`
+## • `` -&gt; `...10`
+## • `` -&gt; `...13`
+## • `` -&gt; `...14`
+## • `` -&gt; `...15`</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Variables and Data Types</li>
+</ol>
+<pre class="r"><code># Listing variables and their data types
+str(data)</code></pre>
+<pre><code>## tibble [825 × 16] (S3: tbl_df/tbl/data.frame)
+##  $ Segment&gt;&gt;        : chr [1:825] &quot;Ship Mode&gt;&gt;&quot; &quot;Order ID&quot; &quot;CA-2011-100293&quot; &quot;CA-2011-100706&quot; ...
+##  $ Consumer         : chr [1:825] &quot;First Class&quot; NA NA NA ...
+##  $ ...3             : chr [1:825] &quot;Same Day&quot; NA NA NA ...
+##  $ ...4             : chr [1:825] &quot;Second Class&quot; NA NA &quot;129.44&quot; ...
+##  $ ...5             : chr [1:825] &quot;Standard Class&quot; NA NA NA ...
+##  $ Consumer Total   : num [1:825] NA NA NA 129 605 ...
+##  $ Corporate        : chr [1:825] &quot;First Class&quot; NA NA NA ...
+##  $ ...8             : chr [1:825] &quot;Same Day&quot; NA NA NA ...
+##  $ ...9             : chr [1:825] &quot;Second Class&quot; NA NA NA ...
+##  $ ...10            : chr [1:825] &quot;Standard Class&quot; NA NA NA ...
+##  $ Corporate Total  : num [1:825] NA NA NA NA NA ...
+##  $ Home Office      : chr [1:825] &quot;First Class&quot; NA NA NA ...
+##  $ ...13            : chr [1:825] &quot;Same Day&quot; NA NA NA ...
+##  $ ...14            : chr [1:825] &quot;Second Class&quot; NA NA NA ...
+##  $ ...15            : chr [1:825] &quot;Standard Class&quot; NA &quot;91.055999999999997&quot; NA ...
+##  $ Home Office Total: num [1:825] NA NA 91.1 NA NA ...</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Data Structure</li>
+</ol>
+<pre class="r"><code># Examining the structure of the dataset
+summary(data)</code></pre>
+<pre><code>##   Segment&gt;&gt;           Consumer             ...3               ...4          
+##  Length:825         Length:825         Length:825         Length:825        
+##  Class :character   Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+##                                                                             
+##                                                                             
+##                                                                             
+##                                                                             
+##      ...5           Consumer Total       Corporate             ...8          
+##  Length:825         Min.   :     2.06   Length:825         Length:825        
+##  Class :character   1st Qu.:    36.19   Class :character   Class :character  
+##  Mode  :character   Median :   173.94   Mode  :character   Mode  :character  
+##                     Mean   :   879.02                                        
+##                     3rd Qu.:   517.50                                        
+##                     Max.   :195580.97                                        
+##                     NA&#39;s   :380                                              
+##      ...9              ...10           Corporate Total     Home Office       
+##  Length:825         Length:825         Min.   :     1.17   Length:825        
+##  Class :character   Class :character   1st Qu.:    31.07   Class :character  
+##  Mode  :character   Mode  :character   Median :   158.25   Mode  :character  
+##                                        Mean   :   982.95                     
+##                                        3rd Qu.:   583.52                     
+##                                        Max.   :121885.93                     
+##                                        NA&#39;s   :577                           
+##     ...13              ...14              ...15           Home Office Total 
+##  Length:825         Length:825         Length:825         Min.   :    3.44  
+##  Class :character   Class :character   Class :character   1st Qu.:   35.82  
+##  Mode  :character   Mode  :character   Mode  :character   Median :  150.06  
+##                                                           Mean   : 1125.08  
+##                                                           3rd Qu.:  530.50  
+##                                                           Max.   :74255.00  
+##                                                           NA&#39;s   :693</code></pre>
+<ol start="4" style="list-style-type: decimal">
+<li>Dimensions of the Data Set</li>
+</ol>
+<pre class="r"><code># Displaying dimensions
+dim(data)</code></pre>
+<pre><code>## [1] 825  16</code></pre>
+<ol start="5" style="list-style-type: decimal">
+<li>Data Preview</li>
+</ol>
+<pre class="r"><code># First 6 rows
+head(data, 6)</code></pre>
+<pre><code>## # A tibble: 6 × 16
+##   `Segment&gt;&gt;`  Consumer ...3  ...4  ...5  `Consumer Total` Corporate ...8  ...9 
+##   &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;
+## 1 Ship Mode&gt;&gt;  First C… Same… Seco… Stan…              NA  First Cl… Same… Seco…
+## 2 Order ID     &lt;NA&gt;     &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;               NA  &lt;NA&gt;      &lt;NA&gt;  &lt;NA&gt; 
+## 3 CA-2011-100… &lt;NA&gt;     &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;               NA  &lt;NA&gt;      &lt;NA&gt;  &lt;NA&gt; 
+## 4 CA-2011-100… &lt;NA&gt;     &lt;NA&gt;  129.… &lt;NA&gt;              129. &lt;NA&gt;      &lt;NA&gt;  &lt;NA&gt; 
+## 5 CA-2011-100… &lt;NA&gt;     &lt;NA&gt;  &lt;NA&gt;  605.…             605. &lt;NA&gt;      &lt;NA&gt;  &lt;NA&gt; 
+## 6 CA-2011-100… &lt;NA&gt;     &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;               NA  &lt;NA&gt;      &lt;NA&gt;  &lt;NA&gt; 
+## # ℹ 7 more variables: ...10 &lt;chr&gt;, `Corporate Total` &lt;dbl&gt;,
+## #   `Home Office` &lt;chr&gt;, ...13 &lt;chr&gt;, ...14 &lt;chr&gt;, ...15 &lt;chr&gt;,
+## #   `Home Office Total` &lt;dbl&gt;</code></pre>
+<pre class="r"><code># Last 6 rows
+tail(data, 6)</code></pre>
+<pre><code>## # A tibble: 6 × 16
+##   `Segment&gt;&gt;`  Consumer ...3  ...4  ...5  `Consumer Total` Corporate ...8  ...9 
+##   &lt;chr&gt;        &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;
+## 1 US-2014-166… &lt;NA&gt;     &lt;NA&gt;  &lt;NA&gt;  24               24    &lt;NA&gt;      &lt;NA&gt;  &lt;NA&gt; 
+## 2 US-2014-166… &lt;NA&gt;     &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;             NA    &lt;NA&gt;      &lt;NA&gt;  &lt;NA&gt; 
+## 3 US-2014-167… &lt;NA&gt;     &lt;NA&gt;  1827… &lt;NA&gt;           1828.   &lt;NA&gt;      &lt;NA&gt;  &lt;NA&gt; 
+## 4 US-2014-168… &lt;NA&gt;     &lt;NA&gt;  &lt;NA&gt;  &lt;NA&gt;             NA    &lt;NA&gt;      8167… &lt;NA&gt; 
+## 5 US-2014-168… &lt;NA&gt;     &lt;NA&gt;  &lt;NA&gt;  2.80…             2.81 &lt;NA&gt;      &lt;NA&gt;  &lt;NA&gt; 
+## 6 Grand Total  20802.1… 8132… 4972… 1169…        195581.   20792.60… 9907… 3524…
+## # ℹ 7 more variables: ...10 &lt;chr&gt;, `Corporate Total` &lt;dbl&gt;,
+## #   `Home Office` &lt;chr&gt;, ...13 &lt;chr&gt;, ...14 &lt;chr&gt;, ...15 &lt;chr&gt;,
+## #   `Home Office Total` &lt;dbl&gt;</code></pre>
+<ol start="6" style="list-style-type: decimal">
+<li>&amp; 7. Missing Values</li>
+</ol>
+<pre class="r"><code># Total missing values
+sum(is.na(data))</code></pre>
+<pre><code>## [1] 10704</code></pre>
+<pre class="r"><code># Missing values in each column
+colSums(is.na(data))</code></pre>
+<pre><code>##         Segment&gt;&gt;          Consumer              ...3              ...4 
+##                 0               751               795               732 
+##              ...5    Consumer Total         Corporate              ...8 
+##               570               380               783               818 
+##              ...9             ...10   Corporate Total       Home Office 
+##               773               671               577               811 
+##             ...13             ...14             ...15 Home Office Total 
+##               817               800               733               693</code></pre>
 <pre class="r"><code>group_project_data &lt;- read_xlsx (&quot;structured-sales-data-1.xlsx&quot;) </code></pre>
 <pre><code>## New names:
 ## • `` -&gt; `...3`
@@ -2971,7 +3083,7 @@ is.na.data.frame(group_project_data)</code></pre>
 <pre class="r"><code>## Deletion of columns Consumer Total, Corporate Total, and Home Office Total. 
 
 group_project_data_nototal &lt;- group_project_data %&gt;% select(-`Consumer Total`, -`Corporate Total`, - `Home Office Total`) 
-View(group_project_data_nototal)
+#View(group_project_data_nototal)
 
 ##Deletion of row 2 and 3 (Order ID). This row only contains the sub-name or column title for 1st column aka Segment. 
 
@@ -12893,6 +13005,8 @@ covered in Week 10 and in your statistics courses.</p>
 <p>(35 points): Predictive Analytics/Modeling Apply some predictive
 analytics/modeling techniques covered in Week 10 and in your statistics
 courses.</p>
+</div>
+</div>
 
 
 

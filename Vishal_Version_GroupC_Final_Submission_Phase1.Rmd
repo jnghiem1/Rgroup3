@@ -15,10 +15,18 @@ library(tidyr)
 library(ggplot2)
 ```
 
-Step 1: Introduction to the Data Set
-Introduction: The dataset consists of structured sales data from a retail or e-commerce business. It includes information on customer segments, shipping modes, and order details, providing a detailed overview of sales transactions.
-Data Source: As the data was provided directly (and not obtained from an external source), we'll assume it's from a professional or academic setting. If it's from an online source, you should include the hyperlink here.
-Choice of Data Set: This data set was chosen because it offers a variety of opportunities for tidying, exploratory data analysis (EDA), and statistical inferences. The dataset's complexity in terms of customer segmentation and shipping modes makes it an ideal candidate for applying diverse data analysis techniques.
+### Step 1: Introduction to the Data Set
+
+# Introduction:
+The dataset consists of structured sales data from a retail or e-commerce business. It includes information on customer segments, shipping modes, and order details, providing a detailed overview of sales transactions.
+
+##Data Source: 
+
+<<TODO Oye will be providing data source here>>
+
+#Choice of Data Set: 
+
+This data set was chosen because it offers a variety of opportunities for tidying, exploratory data analysis (EDA), and statistical inferences. The dataset's complexity in terms of customer segmentation and shipping modes makes it an ideal candidate for applying diverse data analysis techniques.
 
 ## Data Prepration
 
@@ -116,7 +124,6 @@ is.na.data.frame(group_project_data)
 ## Deletion of columns Consumer Total, Corporate Total, and Home Office Total. 
 
 group_project_data_nototal <- group_project_data %>% select(-`Consumer Total`, -`Corporate Total`, - `Home Office Total`) 
-View(group_project_data_nototal)
 
 ##Deletion of row 2 and 3 (Order ID). This row only contains the sub-name or column title for 1st column aka Segment. 
 
