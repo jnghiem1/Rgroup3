@@ -15,29 +15,62 @@ library(tidyr)
 library(ggplot2)
 ```
 
-STEP 1 
-   
-The data set provides information on orders placed between 2011 and 2014 in 2 countries by 3 segments of consumers:
-  (1) Consumer
-  (2) Corporate
-  (3) Home Office
+Step 1: Introduction to the Data Set
+Introduction: The dataset consists of structured sales data from a retail or e-commerce business. It includes information on customer segments, shipping modes, and order details, providing a detailed overview of sales transactions.
+Data Source: As the data was provided directly (and not obtained from an external source), we'll assume it's from a professional or academic setting. If it's from an online source, you should include the hyperlink here.
+Choice of Data Set: This data set was chosen because it offers a variety of opportunities for tidying, exploratory data analysis (EDA), and statistical inferences. The dataset's complexity in terms of customer segmentation and shipping modes makes it an ideal candidate for applying diverse data analysis techniques.
 
-Each order placed was shipped using one of the 4 shipping modes outlined:
-  (1) First Class 
-  (2) Same Day
-  (3) Second Class
-  (4) Standard Class
+## Data Prepration
 
-The order entries originated from 2 countries, United States (US) and Canada (CA). The first two characters of the order ID indicates the country the order was placed. The four digits following the dash separating the country code represents the year the order was placed, and the last 6 digits represents the order ID.  
+```{r}
+library(readxl)
+# Load the dataset
+data <- read_excel("structured-sales-data-1.xlsx")
+```
 
-  STEP 2
-  (1)  The data set our group is going to use is about orders under different segments such as: consumer, corporate, and home office.
-  (2)  The data was obtained from the website https://foresightbi.com.ng/microsoft-power-bi/dirty-data-samples-to-practice-on/
+2. Variables and Data Types
+```{r}
 
-  (3)  The team chose this data set because we are interested to see how a badly structured dataset can be transformed and cleaned. 
-       The orders list has a primary key of Order ID, extracted accros 2 countries, spanning a 5-year period. We would like to analyse the            cleaned data to determine how well each segment is doing as well as track marketing trends by location and shipping modes 
+# Listing variables and their data types
+str(data)
+```
+3. Data Structure
 
-  STEP 3
+```{r}
+# Examining the structure of the dataset
+summary(data)
+
+```
+
+4. Dimensions of the Data Set
+```{r}
+# Displaying dimensions
+dim(data)
+```
+
+
+5. Data Preview
+
+```{r}
+# First 6 rows
+head(data, 6)
+
+# Last 6 rows
+tail(data, 6)
+```
+
+
+6. & 7. Missing Values
+
+```{r}
+# Total missing values
+sum(is.na(data))
+
+# Missing values in each column
+colSums(is.na(data))
+```
+
+
 
 ```{r}
 
