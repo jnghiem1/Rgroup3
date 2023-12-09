@@ -140,8 +140,25 @@ new variables, or join separate data frames to create new summary information).
 
 
 ```{r}
+# 1. Run the summary of the variables in the data set.
 
+# Total number of orders by country
+ordersByCountry <- as.data.frame( table(group_project_data_nototal_final$Country) )
+ordersByCountry
+# Canada has more orders than the United states. Approximately 5 times more orders overall. 
+# Need to improve US orders
+```
 
+```{r}
+ordersByYear <- as.data.frame( table(group_project_data_nototal_final$Year) )
+ordersByYear
+# Shows the growth trends. Company is doing significantly better with every passing year indicating some level of progress and growth
+```
+
+```{r}
+ordersBySegment <- as.data.frame( table(group_project_data_nototal_final$Segment) )
+ordersBySegment
+# Consumer segment is the most successful, followed by Corporate. Efforts should be made to target especially the HomeOfficeSegment
 ```
 
   STEP 6
