@@ -15,35 +15,40 @@ library(tidyr)
 library(ggplot2)
 ```
 
-STEP 1 
+# -------------
+# STEP 1 
+# -------------
    
-The data set provides information on orders placed between 2011 and 2014 in 2 countries by 3 segments of consumers:
-  (1) Consumer
-  (2) Corporate
-  (3) Home Office
+# The data set provides information on orders placed between 2011 and 2014 in 2 countries by 3 segments of # customers:
+#  (1) Consumer
+#  (2) Corporate
+#  (3) Home Office
 
-Each order placed was shipped using one of the 4 shipping modes outlined:
-  (1) First Class 
-  (2) Same Day
-  (3) Second Class
-  (4) Standard Class
+# Each order placed was shipped using one of the 4 shipping modes outlined:
+#   (1) First Class 
+#   (2) Same Day
+#   (3) Second Class
+#   (4) Standard Class
 
-The order entries originated from 2 countries, United States (US) and Canada (CA). The first two characters of the order ID indicates the country the order was placed. The four digits following the dash separating the country code represents the year the order was placed, and the last 6 digits represents the order ID.  
+# The order entries originated from 2 countries, United States (US) and Canada (CA). The first two characters of the order ID  indicate the country the order was placed. The four digits following the dash separating the country code represents the year the order was placed, and the last 6 digits represents the order ID.  
 
-  STEP 2
-  (1)  The data set our group is going to use is about orders under different segments such as: consumer, corporate, and home office.
-  (2)  The data was obtained from the website https://foresightbi.com.ng/microsoft-power-bi/dirty-data-samples-to-practice-on/
 
-  (3)  The team chose this data set because we are interested to see how a badly structured dataset can be transformed and cleaned. 
-       The orders list has a primary key of Order ID, extracted accros 2 countries, spanning a 5-year period. We would like to analyse the            cleaned data to determine how well each segment is doing as well as track marketing trends by location and shipping modes 
+# -----------
+# STEP 2
+# -----------
+#  (1)  The data set our group is going to use is about orders under different segments such as: consumer, corporate, and home office.
+#  (2)  The data was obtained from the website https://foresightbi.com.ng/microsoft-power-bi/dirty-data-samples-to-practice-on/
 
-  STEP 3
+#  (3)  The team chose this data set because we are interested to see how a badly structured dataset can be transformed and cleaned. The orders list has a primary key of Order ID, extracted accros 2 countries, spanning a 5-year period. We would like to analyse the cleaned data to determine how well each segment is doing as well as track marketing trends by location and shipping modes.
 
+
+# -----------
+# STEP 3
+# -----------
 ```{r}
 
 group_project_data <- read_xlsx ("structured-sales-data-1.xlsx") 
 View(group_project_data)
-
 
 ## (1)  The data set is dirty and badly structured. There are some missing value in some column and the Order ID field includes country and            year. 
 
@@ -80,43 +85,39 @@ is.na.data.frame(group_project_data)
 
 ```{r}
 
-## Deletion of columns Consumer Total, Corporate Total, and Home Office Total. 
-
+### Deletion of columns Consumer Total, Corporate Total, and Home Office Total. 
 group_project_data_nototal <- group_project_data %>% select(-`Consumer Total`, -`Corporate Total`, - `Home Office Total`) 
-View(group_project_data_nototal)
+# View(group_project_data_nototal)
 
-##Deletion of row 2 and 3 (Order ID). This row only contains the sub-name or column title for 1st column aka Segment. 
 
+### Deletion of row 2 and 3 (Order ID). This row only contains the sub-name or column title for 1st column aka Segment. 
 group_project_data_nototal2 <- group_project_data_nototal [-c(1:2,825),]
 
-## Change columns name.  
 
+### Change columns name.  
 colnames(group_project_data_nototal2) <- c("Segment>>","Consumer_FirstClass", "Consumer_SameDayClass", "Consumer_SecondClass", "Consumer_StandardClass", "Corporate_FirstClass", "Corporate_SameDayClass", "Corporate_SecondClass", "Corporate_StandardClass", "HomeOffice_FirstClass", "HomeOffice_SameDayClass", "HomeOffice_SecondClass","HomeOffice_StandardClass")
+# View(group_project_data_nototal2)
 
-View(group_project_data_nototal2)
-  
-## Gather or PIVOT-LONGER to combine segments: Consumer, Corporate, Home Office. 
 
+### Gather or PIVOT-LONGER to combine segments: Consumer, Corporate, Home Office. 
 group_project_data_nototal3 <- gather(group_project_data_nototal2, key = "Segment", value = "Price", "Consumer_FirstClass":"HomeOffice_StandardClass")
 View(group_project_data_nototal3)
 
-## Convert Price (chr) to numberic. 
-
+### Convert Price (chr) to numberic. 
 group_project_data_nototal3$Price <- as.numeric(group_project_data_nototal3$Price)
 str(group_project_data_nototal3)
 
-## Remove all NAs in Price column.  
 
+### Remove all NAs in Price column.  
 is.na(group_project_data_nototal3)
 colSums(is.na(group_project_data_nototal3))
 group_project_data_nototal_final <- group_project_data_nototal3[!is.na(group_project_data_nototal3$Price),]
 
-## Separate segment to country, year, and order iD. 
 
+### Separate ORDER ID to country, year, and order ID. 
 group_project_data_nototal_final <- separate (group_project_data_nototal_final, "Segment>>", into = c("Country", "Year", "Order ID"), sep = "-")
 
-## For country column, it is either in the United States of Canada.  
-
+### For country column, it is either in the United States or Canada.  
 group_project_data_nototal_final <- separate (group_project_data_nototal_final, "Segment", into = c("Segment", "Ship Order"), sep = "_")
 View(group_project_data_nototal_final)
 
