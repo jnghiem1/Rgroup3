@@ -144,23 +144,21 @@ new variables, or join separate data frames to create new summary information).
 ```{r}
 
 
-# Total number of orders by country
+# Total number of orders, total sales by country
 Country <-  group_project_data_nototal_final$Country
 CountryFreq <- as.data.frame( table(Country) )
  
-
-# Canada has more orders than the United states. Approximately 5 times more orders overall. 
-# Need to improve US orders
-
 countryOrderSum <- group_project_data_nototal_final %>% group_by(Country) %>% 
   summarise( sum_country_earned = sum(Price),
             .groups = 'drop')
-countryOrderSum
+# countryOrderSum
 
 # orders counts and total sales by Country
 CountryOrderPriceTotal <- CountryFreq %>% left_join( countryOrderSum, by='Country' )
 CountryOrderPriceTotal
 
+# Canada has more orders than the United states. Approximately 5 times more orders overall and approximately 6 times in sales revenue.
+# Need to improve US orders
 ```
 
 ```{r}
@@ -178,10 +176,55 @@ ordersBySegment
 
 
 ```{r}
+# CANADA
+
+ordersCanada <- subset(completeDatadf, Country=='CA')
+ordersCanada
+
+Segment <- ordersCanada$Segment
+segmentCountdf <- as.data.frame( table( Segment  ) )
+
+segmentSumCanada <- ordersCanada %>% group_by(Segment) %>% 
+  summarise( total_canada_sales = sum(Price),
+            .groups = 'drop')
+
+segmentMeanCanada <- ordersCanada %>% group_by(Segment) %>% 
+  summarise( mean_canada_sales = mean(Price),
+            .groups = 'drop')
+
+allSegmentDataCanada <- segmentCountdf %>% left_join( segmentSumCanada, by='Segment' ) %>% left_join( segmentMeanCanada, by='Segment')
+
+allSegmentDataCanada
+```
+
+```{r}
+# UNITED STATES
+
+ordersUnitedStates <- subset(completeDatadf, Country=='US')
+ordersUnitedStates
+
+Segment <- ordersUnitedStates$Segment
+segmentCountdf <- as.data.frame( table( Segment ) )
+
+segmentSumUnitedStates <- ordersUnitedStates %>% group_by(Segment) %>% 
+  summarise( total_united_states_sales = sum(Price),
+            .groups = 'drop')
+
+segmentMeanUnitedStates <- ordersUnitedStates %>% group_by(Segment) %>% 
+  summarise( mean_united_states_sales = mean(Price),
+            .groups = 'drop')
+
+allSegmentDataUnitedStates <- segmentCountdf %>% left_join( segmentSumUnitedStates, by='Segment' ) %>% left_join( segmentMeanUnitedStates, by='Segment')
+
+allSegmentDataUnitedStates
+```
+```{r} 
+# UNITED STATES & CANADA
+
 Segment <- group_project_data_nototal_final$Segment
 segmentCountdf <- as.data.frame( table( Segment  ) )
 completeDatadf <- as.data.frame( group_project_data_nototal_final   )
-
+# 
 segmentSum <- completeDatadf %>% group_by(Segment) %>% 
   summarise( sum_dollar_earned = sum(Price),
             .groups = 'drop')
@@ -195,9 +238,15 @@ segmentMean <- completeDatadf %>% group_by(Segment) %>%
 allSegmentData <- segmentCountdf %>% left_join( segmentSum, by='Segment' ) %>% left_join( segmentMean, by='Segment')
 
 allSegmentData
+```
 
 # Unit orders in the HomeOffice Segment are averagely more pricey than other segments.
 # Consumer segment had the largest unit order as well as total earned. 
+
+
+
+ordersUnitedStates <- subset(completeDatadf, Country=='US')
+ordersUnitedStates
 
 ```
 
