@@ -138,9 +138,11 @@ d) Scatter plot
 plotting the data as above, slice and dice the data in different ways, create
 new variables, or join separate data frames to create new summary information).
 
-
-```{r}
+# ------------------------------------------------------
 # 1. Run the summary of the variables in the data set.
+# ------------------------------------------------------
+```{r}
+
 
 # Total number of orders by country
 ordersByCountry <- as.data.frame( table(group_project_data_nototal_final$Country) )
@@ -158,7 +160,33 @@ ordersByYear
 ```{r}
 ordersBySegment <- as.data.frame( table(group_project_data_nototal_final$Segment) )
 ordersBySegment
-# Consumer segment is the most successful, followed by Corporate. Efforts should be made to target especially the HomeOfficeSegment
+
+# Consumer segment is the most successful, followed by Corporate. Efforts should be made to target especially the HomeOffice Segment
+```
+
+
+```{r}
+Segment <- group_project_data_nototal_final$Segment
+segmentCountdf <- as.data.frame( table( Segment  ) )
+completeDatadf <- as.data.frame( group_project_data_nototal_final   )
+
+segmentSum <- completeDatadf %>% group_by(Segment) %>% 
+  summarise( sum_dollar_earned = sum(Price),
+            .groups = 'drop')
+#segmentSum
+
+segmentMean <- completeDatadf %>% group_by(Segment) %>% 
+  summarise( mean_dollar_earned = mean(Price),
+            .groups = 'drop')
+#segmentMean
+
+allSegmentData <- segmentCountdf %>% left_join( segmentSum, by='Segment' ) %>% left_join( segmentMean, by='Segment')
+
+allSegmentData
+
+# Unit orders in the HomeOffice Segment are averagely more pricey than other segments.
+# Consumer segment had the largest unit order as well as total earned. 
+
 ```
 
   STEP 6
