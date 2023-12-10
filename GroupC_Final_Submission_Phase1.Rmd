@@ -145,10 +145,22 @@ new variables, or join separate data frames to create new summary information).
 
 
 # Total number of orders by country
-ordersByCountry <- as.data.frame( table(group_project_data_nototal_final$Country) )
-ordersByCountry
+Country <-  group_project_data_nototal_final$Country
+CountryFreq <- as.data.frame( table(Country) )
+ 
+
 # Canada has more orders than the United states. Approximately 5 times more orders overall. 
 # Need to improve US orders
+
+countryOrderSum <- group_project_data_nototal_final %>% group_by(Country) %>% 
+  summarise( sum_country_earned = sum(Price),
+            .groups = 'drop')
+countryOrderSum
+
+# orders counts and total sales by Country
+CountryOrderPriceTotal <- CountryFreq %>% left_join( countryOrderSum, by='Country' )
+CountryOrderPriceTotal
+
 ```
 
 ```{r}
