@@ -126,7 +126,7 @@ group_project_data_nototal_final <- separate (group_project_data_nototal_final, 
 group_project_data_nototal_final
 ```
 
-  STEP 5 
+  STEP 5 (Oye)
 
 ```{r}
 CountryFrequency <- sort(table(group_project_data_nototal_final$Country), decreasing = TRUE)
@@ -188,7 +188,7 @@ boxplot(Mean_Price~Segment,
 ##US Corporate Same Day spends the most in postage above $8,000 on average. Although, Home Office spend the most on an individual transaction >$2,000.  
 ```
 
-  STEP 6
+  STEP 6 (Vishal)
 
   (35 points): Inferences Apply some inferential statistics techniques
 covered in Week 10 and in your statistics courses.
@@ -225,7 +225,7 @@ sprintf("95 percent Confidence Interval: (%s, %s)", l95_rounded, r95_rounded)
 
 ```
   
-  STEP 7
+  STEP 7 (Alvina)
 
   (35 points):  Predictive Analytics/Modeling Apply some predictive
 analytics/modeling techniques covered in Week 10 and in your statistics courses.
