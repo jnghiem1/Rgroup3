@@ -13,6 +13,7 @@ library(readxl)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
+library(Hmisc)
 ```
 
 # -------------
@@ -81,87 +82,126 @@ is.na.data.frame(group_project_data)
 
 ```
 
-  STEP 4 Clean and Tidy the data 
+  STEP 4 Clean and Tidy the data (Julma)
 
 ```{r}
 
-### Deletion of columns Consumer Total, Corporate Total, and Home Office Total. 
+## Deletion of columns Consumer Total, Corporate Total, and Home Office Total. 
+
 group_project_data_nototal <- group_project_data %>% select(-`Consumer Total`, -`Corporate Total`, - `Home Office Total`) 
-# View(group_project_data_nototal)
+group_project_data_nototal
 
+## Deletion of row 2 and 3 (Order ID). This row only contains the sub-name or column title for 1st column aka Segment. 
 
-### Deletion of row 2 and 3 (Order ID). This row only contains the sub-name or column title for 1st column aka Segment. 
 group_project_data_nototal2 <- group_project_data_nototal [-c(1:2,825),]
 
+## Change columns name.  
 
-### Change columns name.  
 colnames(group_project_data_nototal2) <- c("Segment>>","Consumer_FirstClass", "Consumer_SameDayClass", "Consumer_SecondClass", "Consumer_StandardClass", "Corporate_FirstClass", "Corporate_SameDayClass", "Corporate_SecondClass", "Corporate_StandardClass", "HomeOffice_FirstClass", "HomeOffice_SameDayClass", "HomeOffice_SecondClass","HomeOffice_StandardClass")
-# View(group_project_data_nototal2)
 
+group_project_data_nototal2
+  
+## Gather or PIVOT-LONGER to combine segments: Consumer, Corporate, Home Office. 
 
-### Gather or PIVOT-LONGER to combine segments: Consumer, Corporate, Home Office. 
 group_project_data_nototal3 <- gather(group_project_data_nototal2, key = "Segment", value = "Price", "Consumer_FirstClass":"HomeOffice_StandardClass")
-View(group_project_data_nototal3)
+group_project_data_nototal3
 
-### Convert Price (chr) to numberic. 
+## Convert Price (chr) to numberic. 
+
 group_project_data_nototal3$Price <- as.numeric(group_project_data_nototal3$Price)
 str(group_project_data_nototal3)
 
+## Remove all NAs in Price column.  
 
-### Remove all NAs in Price column.  
 is.na(group_project_data_nototal3)
 colSums(is.na(group_project_data_nototal3))
 group_project_data_nototal_final <- group_project_data_nototal3[!is.na(group_project_data_nototal3$Price),]
 
+## Separate segment to country, year, and order iD. 
 
-### Separate ORDER ID to country, year, and order ID. 
 group_project_data_nototal_final <- separate (group_project_data_nototal_final, "Segment>>", into = c("Country", "Year", "Order ID"), sep = "-")
 
-### For country column, it is either in the United States or Canada.  
+## For country column, it is either in the United States of Canada.  
+
 group_project_data_nototal_final <- separate (group_project_data_nototal_final, "Segment", into = c("Segment", "Ship Order"), sep = "_")
-View(group_project_data_nototal_final)
-
+group_project_data_nototal_final
 ```
 
-  STEP 5 
-  
-  (30 points): Perform Exploratory Data Analysis (EDA)
-1. Run the summary of the variables in the data set.
-2. Learn about the data visually by plotting whichever plot from the list below
-applies:
-a) Bar plot
-b) Histogram
-c) Box plot
-d) Scatter plot
-3. Summarize your findings from the various plots and tables.
-4. Uncover new information in the data that is not self-evident (i.e. besides
-plotting the data as above, slice and dice the data in different ways, create
-new variables, or join separate data frames to create new summary information).
-
+  STEP 5 (Oye)
 
 ```{r}
-# 1. Run the summary of the variables in the data set.
+CountryFrequency <- sort(table(group_project_data_nototal_final$Country), decreasing = TRUE)
 
-# Total number of orders by country
-ordersByCountry <- as.data.frame( table(group_project_data_nototal_final$Country) )
-ordersByCountry
-# Canada has more orders than the United states. Approximately 5 times more orders overall. 
-# Need to improve US orders
+barplot(CountryFrequency, main = "Postage Usage by Country",
+        ylab = "Country", col = "blue",
+        ylim = c(0, 800))
+abline(h = 0, lwd = 2)
+
+SegmentFrequency <- sort(table(group_project_data_nototal_final$Segment), decreasing = TRUE)
+
+barplot(SegmentFrequency, main = "Postage Usage by Segment",
+        ylab = "Segment", col = "blue",
+        ylim = c(0, 600))
+abline(h = 0, lwd = 2)
+
+ShipOrderFrequency <- sort(table(group_project_data_nototal_final$`Ship Order`), decreasing = TRUE)
+
+barplot(ShipOrderFrequency, main = "Postage Usage by Ship Order",
+        ylab = "Ship Order", col = "blue",
+        ylim = c(0, 600))
+abline(h = 0, lwd = 2)
+
+##Combine country, segment, and ship order to analyze the yearly average price for each ship order by segment by country.
+
+group_project_data_nototal_final$Country_Segment_ShipOrder <- paste(group_project_data_nototal_final$Country,"-",group_project_data_nototal_final$Segment, "-", group_project_data_nototal_final$`Ship Order`)
+
+##There are 22 unique grouping (by ship order by segment by country). Find the average price for each.  
+
+unique(group_project_data_nototal_final$Country_Segment_ShipOrder)
+
+finaltb <- group_project_data_nototal_final %>% group_by(Country_Segment_ShipOrder, Year) %>%  summarise(mean_Price = mean(Price)) 
+
+View(finaltb)
+
+str(finaltb)
+finaltb$Year <- as.numeric(finaltb$Year)
+
+Year <- finaltb$Year
+Mean_Price <- finaltb$mean_Price
+Segment <- finaltb$Country_Segment_ShipOrder
+
+ggplot(data = finaltb , aes(x = Year, y = Mean_Price)) + geom_point(aes(color = Segment), alpha = 0.6, size = 5) 
+
+ggplot(data = group_project_data_nototal_final , aes(x = Year, y = Price)) + geom_point(aes(color = Segment), alpha = 0.6, size = 5) 
+
+boxplot(Mean_Price~Segment,
+        main="Average Spending by Segment",
+        horizontal = FALSE,
+        xlab="Segment",
+        ylab="Mean Price",
+        col="green",
+        border="black")
+
+##Canada use postage more frequent compared with the US. Canada recorded about 700 usage while US recorded less than 200 times. 
+##About 450 consumers used postage while around 250 corporate (accounts) used postage. Home office recorded around 150 usage.
+##Standard Class is the preferred type of ship order at 500 frequency.  Second class at second place with around 150 usage.  First class is at third place with about 120 ship order frequency.  Same-Day class is the least favorite with less than 100 usage.  
+##There are 22 unique grouping (by ship order by segment by country).
+##US Corporate Same Day spends the most in postage above $8,000 on average. Although, Home Office spend the most on an individual transaction >$2,000.  
+```
+```{r - part 5-2 AC} 
+## segment and ship order breakdown
+Seg<- group_project_data_nototal_final$Segment
+SHO<- group_project_data_nototal_final$`Ship Order`
+FTSS<- table(Seg, SHO)
+barplot(FTSS, main = "Segment and Ship Order", col = c('blue', 'yellow','green'), legend = row.names(FTSS), args.legend = list(x="topleft"), xlab = 'Ship Order', ylab = 'Count', ylim = c(0,300),  beside = TRUE)
+
+## Country and Segment
+CT<- group_project_data_nototal_final$Country
+FTCS<- table(Seg, CT)
+barplot(FTCS, main = "Country and Segment", col = c('blue', 'yellow','green'), legend = row.names(FTCS), args.legend = list(x="topright"), xlab = 'Country', ylab = 'Count', ylim = c(0,400),  beside = TRUE)
 ```
 
-```{r}
-ordersByYear <- as.data.frame( table(group_project_data_nototal_final$Year) )
-ordersByYear
-# Shows the growth trends. Company is doing significantly better with every passing year indicating some level of progress and growth
-```
-
-```{r}
-ordersBySegment <- as.data.frame( table(group_project_data_nototal_final$Segment) )
-ordersBySegment
-# Consumer segment is the most successful, followed by Corporate. Efforts should be made to target especially the HomeOfficeSegment
-```
-
-  STEP 6
+  STEP 6 (Vishal)
 
   (35 points): Inferences Apply some inferential statistics techniques
 covered in Week 10 and in your statistics courses.
@@ -169,17 +209,121 @@ covered in Week 10 and in your statistics courses.
 
 ```{r}
 
+### Sample mean
+sample_mean <- mean(group_project_data_nototal_final$Price)
+
+### Sample Size
+n <- nrow(group_project_data_nototal_final)
+
+### Sample Std. Dev.
+s <- sd(group_project_data_nototal_final$Price)
+
+### t-critical for 95% CL
+
+### For 95% confidence... 
+t95 <- qt(0.975, df = n - 1, lower.tail = TRUE)
+
+### 95% Confidence Interval
+l95 <- sample_mean - (t95*s/sqrt(n))
+r95 <- sample_mean + (t95*s/sqrt(n))
+
+l95_rounded <- round(l95, digits = 3)
+r95_rounded <- round(r95, digits = 3)
+
+### Display 95% CI
+sprintf("95 percent Confidence Interval: (%s, %s)", l95_rounded, r95_rounded)
+
+### With 95% confidence, the interval between $398.186 and $554.909 contains the true population mean price of postage. The $2,000 maximum individual spending by Home Office user and the $8,000 mean price of US Corporate Same Day Service are not true representation of regular spending on postage. These are outliers and could only happen on occasion. Although, it does not mean this is not a true spending. Between 2011 and 2014, there are various factors wherein the company would be willing to pay the price to ship overnight to a customer or to itself.  
+
 
 ```
   
-  STEP 7
+  STEP 7 (Alvina)
 
   (35 points):  Predictive Analytics/Modeling Apply some predictive
 analytics/modeling techniques covered in Week 10 and in your statistics courses.
 
 
 ```{r}
+## Calculate mean by each category. Use the mean as a deciding factor in the logic. 
+View(group_project_data_nototal_final)
+byCountry <- group_project_data_nototal_final %>% group_by( Country) %>% summarise( Mean = mean(Price, na.rm =TRUE))
+byCountry 
+bySegment <- group_project_data_nototal_final %>% group_by( Segment) %>% summarise( Mean = mean(Price, na.rm =TRUE))
+bySegment 
+byShipOrder <- group_project_data_nototal_final %>% group_by( `Ship Order`) %>% summarise( Mean = mean(Price, na.rm =TRUE))
+byShipOrder
+
+## Average price for US is $482.25.  Average price for Canada is $447.26. Average price for Consumer is $440.50.  Average price for Corporate is $493.47. Average price for Home Office is $566.83. Average price for First Class is $397.84. Average price for Same Day Class is $538.90. Average price for Second Class is $571.70. Average price for Standard Class is $459.83. 
 
 
+## Develop a linear regression model. Use 𝛼 = 0.05. 
+
+Year <- finaltb$Year
+Mean_Price <- finaltb$mean_Price
+Segment <- finaltb$Country_Segment_ShipOrder
+
+## Correlation Coefficient and Scatterplot ##
+
+plot(Year, Mean_Price, 
+     main = "Mean_Price versus Year", 
+     xlab = "Year", ylab = "Mean_Price")
+abline(lm(Mean_Price ~ Year))
+
+cor(Year, Mean_Price)
+
+##cor is 0.1174742 which suggest moderate relationship between the two values. 
+
+## If you want to find whether there is a correlation between Mean_Price and Year, use a two-tailed test.
+## H0: rho = 0
+## H1: rho =/= 0
+## There is a medium correlation with the Mean_Price and Year. 
+
+cor.test(Year, Mean_Price, alternative = "two.sided", method = "pearson")
+
+## If you want to find whether there is a positive correlation 
+## between Price and Floor, use a right-tailed test.
+## H0: rho <= 0
+## H1: rho > 0
+
+cor.test(Year, Mean_Price, alternative = "greater", method = "pearson")
+
+## Regression Model ##
+
+lm_PY <- lm(Mean_Price ~ Year)
+
+## Display the ANOVA table containing the SS information
+anova(lm_PY)
+
+## Display the Coefficients information
+summary(lm_PY)
+
+## Predict with 95% confidence the Mean_Price in 2020. 
+
+predict(lm_PY, data.frame (Year = 2020), interval = "prediction", level = 0.95)
+
+## Estimate with 99% confidence the Mean_Price in 2020.
+
+predict(lm_PY, data.frame (Year = 2020), interval = "prediction", level = 0.99)
+
+## With using just the year and the price of postage, it is difficult to come up with a prediction as to what the price would be should on a given year. The Country, Segment, and Ship Order information are needed to build a predictive analysis on what could be the price of postage. Additionally, there are certain factors that affect the pricing of postage that were not included in the data including weight, distance, and time of delivery.  There is also overall economic  factors like inflation, etc.  
+
+## Lineary regression model 2
+## Develop a linear regression model. Use 𝛼 = 0.05. 
+
+Country <- finaltb$Country_Segment_ShipOrder
+Mean_Price <- finaltb$mean_Price
+Segment <- finaltb$Country_Segment_ShipOrder
+
+## Correlation Coefficient and Scatterplot ##
+
+plot(Year, Mean_Price, 
+     main = "Mean_Price versus Year", 
+     xlab = "Year", ylab = "Mean_Price")
+abline(lm(Mean_Price ~ Year))
+
+cor(Year, Mean_Price)
+
+##cor is 0.1174742 which suggest moderate relationship between the two values.
 ```
   
