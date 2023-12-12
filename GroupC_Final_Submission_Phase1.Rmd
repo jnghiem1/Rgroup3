@@ -123,7 +123,7 @@ View(group_project_data_nototal_final)
 
 ```
 
-  STEP 5 
+STEP 5 
   
   (30 points): Perform Exploratory Data Analysis (EDA)
 1. Run the summary of the variables in the data set.
@@ -143,7 +143,6 @@ new variables, or join separate data frames to create new summary information).
 # ------------------------------------------------------
 ```{r}
 
-
 # Total number of orders, total sales by country
 Country <-  group_project_data_nototal_final$Country
 CountryFreq <- as.data.frame( table(Country) )
@@ -157,14 +156,14 @@ countryOrderSum <- group_project_data_nototal_final %>% group_by(Country) %>%
 CountryOrderPriceTotal <- CountryFreq %>% left_join( countryOrderSum, by='Country' )
 CountryOrderPriceTotal
 
-# Canada has more orders than the United states. Approximately 5 times more orders overall and approximately 6 times in sales revenue.
+# Canada has more orders than the United states. Approximately 5 times more orders overall and approximately 6 times more in sales revenue.
 # Need to improve US orders
 ```
 
 ```{r}
 ordersByYear <- as.data.frame( table(group_project_data_nototal_final$Year) )
 ordersByYear
-# Shows the growth trends. Company is doing significantly better with every passing year indicating some level of progress and growth
+# Shows the growth trend. Company is doing significantly better with every passing year indicating some level of progress and growth
 ```
 
 ```{r}
@@ -195,6 +194,8 @@ segmentMeanCanada <- ordersCanada %>% group_by(Segment) %>%
 allSegmentDataCanada <- segmentCountdf %>% left_join( segmentSumCanada, by='Segment' ) %>% left_join( segmentMeanCanada, by='Segment')
 
 allSegmentDataCanada
+# HomeOffice segment has the lowest number of orders and sales, however, mean HomeOffice has the highest unit sale value
+# Consumer segment orders is about 4 times that of Home Office in Canada
 ```
 
 ```{r}
@@ -217,6 +218,7 @@ segmentMeanUnitedStates <- ordersUnitedStates %>% group_by(Segment) %>%
 allSegmentDataUnitedStates <- segmentCountdf %>% left_join( segmentSumUnitedStates, by='Segment' ) %>% left_join( segmentMeanUnitedStates, by='Segment')
 
 allSegmentDataUnitedStates
+# Consumer segment orders is only about 2 times that of Home Office in the United States
 ```
 ```{r} 
 # UNITED STATES & CANADA
@@ -238,16 +240,62 @@ segmentMean <- completeDatadf %>% group_by(Segment) %>%
 allSegmentData <- segmentCountdf %>% left_join( segmentSum, by='Segment' ) %>% left_join( segmentMean, by='Segment')
 
 allSegmentData
-```
 
 # Unit orders in the HomeOffice Segment are averagely more pricey than other segments.
-# Consumer segment had the largest unit order as well as total earned. 
+# Consumer segment had the largest unit order as well as total earned.
+```
+
+ 
+# Shipping Mode 
 
 
 
-ordersUnitedStates <- subset(completeDatadf, Country=='US')
-ordersUnitedStates
+```{r}
 
+CustomerShipModes <- subset(completeDatadf, Segment=='Consumer')
+CustomerShipModes
+
+CustomerShipModesGroup <- CustomerShipModes %>% group_by( `Country`,`Ship Order` )  %>% 
+  summarise( order_total = sum(Price))
+
+CustomerShipModesGroup
+```
+
+```{r}
+CorporateShipModes <- subset(completeDatadf, Segment=='Corporate')
+CorporateShipModes
+
+CorporateShipModesGroup <- CorporateShipModes %>% group_by( `Country`,`Ship Order` )  %>% 
+  summarise( order_total = sum(Price))
+CorporateShipModesGroup
+
+```
+
+
+```{r}
+HomeOfficeShipModes <- subset(completeDatadf, Segment=='HomeOffice')
+HomeOfficeShipModes
+
+HomeOfficeShipModesGroup <- HomeOfficeShipModes %>% group_by( `Country`,`Ship Order` )  %>% 
+  summarise( order_total = sum(Price))
+HomeOfficeShipModesGroup
+
+```
+
+```{r} 
+
+# Ship Order by Sales Segment
+
+allOrders <- subset(completeDatadf)
+allOrders
+
+allOrdersShipModesGroup <- allOrders %>% group_by( `Segment`,`Ship Order` )  %>% 
+  summarise( order_total = sum(Price))
+allOrdersShipModesGroup
+
+
+# The highest orders value came from Consumer/Standard Class shipping @ 116922.135	
+# The lowest order value came from HomeOffice/SameDayClass @ 2977.456	
 ```
 
   STEP 6
