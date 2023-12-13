@@ -44,19 +44,19 @@ Table 1. Summary statistics of the data
 
 ## Insights into Customer Segments
 
-The segmentation of sales data is particularly valuable. By differentiating between Consumers, Corporates, and Home Offices, the dataset reveals varying purchasing patterns and preferences. This segmentation allows us to understand the unique demands and expectations of each group, enabling us to tailor our products and services more effectively.
+The segmentation of sales data is particularly valuable. By differentiating between Consumers, Corporate, and Home Offices, the data set reveals varying purchasing patterns and preferences. This segmentation allows us to understand the unique demands and expectations of each group, enabling us to tailor our products and services more effectively. This data set is limited for us to determine the customer segments. The only factors that can be used was Country and segment type to look into customer segments. If there was more information like the zip codes for the origination and destination of the order, it will be helpful to help determine the demographics of the customers. Other information like the package weight will also be useful to determine if there's correlation between the segments of customer and package size. 
 
 ## Shipping Modes and Operational Insights
 
-The inclusion of shipping modes in the dataset provides critical insights into logistical preferences and efficiencies. By analyzing sales across different shipping options, we can assess the effectiveness of our distribution channels and identify opportunities to optimize shipping logistics, ultimately enhancing customer satisfaction and operational cost-effectiveness.
+The inclusion of shipping modes in the data set provides critical insights into logistical preferences and inefficiencies. By analyzing sales across different shipping options, we can assess the effectiveness of our distribution channels and identify opportunities to optimize shipping logistics, ultimately enhancing customer satisfaction and operational cost-effectiveness. However, the data set only have the ship order type and general segments of the customers. Additional data like the distance of the packages from origination to destination can help determine if distance and segments are factors in determining the ship order type. 
 
 ## Utility in Strategic Decision-Making
 
-This dataset is more than a collection of numbers; it is a tool for strategic decision-making. By leveraging the insights gained from this data, our company can make informed decisions about marketing strategies, product development, customer relationship management, and operational improvements.
+This data set is more than a collection of numbers; it is a tool for strategic decision-making. By leveraging the insights gained from this data, our company can make informed decisions about marketing strategies, product development, customer relationship management, and operational improvements. From our analysis, we noticed a larger market in Canada and specifically in  the consumer and standard class rate. We can continue the marketing efforts in those areas. In the meantime, the US market is still significantly lower than Canada. We can focus more marketing efforts in those areas. We will need a little more information to determine the factors for this. It can be competitors, the demographics we serve, where we are located in the US and how our current marketing efforts. Understanding the demographics and our office locations in the US can also help improve customer relationships and have marketing promotions targeting other segments to expand the customer base. Due to the limitation of data, we currently cannot determine the operational opportunities. However, we can start gathering the delivery time for the different ship orders and segments in the US to see if this is a factor that makes consumers choose our competitors in the US. 
 
 ## Continuous Improvement and Market Adaptation
 
-The dynamic nature of the market demands continuous adaptation and improvement. This dataset serves as a baseline for monitoring changes in consumer behavior and market conditions, enabling our company to stay agile and responsive.
+The dynamic nature of the market demands continuous adaptation and improvement. While this data set serves as a baseline for monitoring changes in consumer behavior and market conditions, enabling our company to stay agile and responsive, having a more comprehensive data set will us understand different aspects of a company. The limitations of this specific data set is an example of how important it is to have detail information like order size, order date, origin, destination, package weight, and more. This experience and data set have taught us to include more details in upcoming data sets so when we want to analyze different the business from different view points, we have more options to make predictions and determine factors for business performance. 
 
 
 
@@ -252,7 +252,7 @@ boxplot(Mean_Price~Segment,
 ##There are 22 unique grouping (by ship order by segment by country).
 ##US Corporate Same Day spends the most in postage above $8,000 on average. Although, Home Office spend the most on an individual transaction >$2,000.  
 ```
-
+Step 5 - part 2 (Alvina)
 ```{r - Alvina}
 ##Segment and Ship Order
 Seg<- group_project_data_nototal_final$Segment
