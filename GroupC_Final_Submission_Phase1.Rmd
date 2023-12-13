@@ -188,6 +188,18 @@ boxplot(Mean_Price~Segment,
 ##US Corporate Same Day spends the most in postage above $8,000 on average. Although, Home Office spend the most on an individual transaction >$2,000.  
 ```
 
+## Country and Segment
+CT<- group_project_data_nototal_final$Country
+FTCS<- table(Seg, CT)
+barplot(FTCS, main = "Country and Segment", col = c('blue', 'yellow','green'), legend = row.names(FTCS), args.legend = list(x="topright"), xlab = 'Country', ylab = 'Count', ylim = c(0,400),  beside = TRUE)
+
+## Country and Ship Order
+FTCSHO<- table(CT, SHO)
+barplot(FTCSHO, main = "Country and Ship Order", col = c('red', 'white'), legend = row.names(FTCSHO), args.legend = list(x="topleft"), xlab = 'Country', ylab = 'Ship Order Count', ylim = c(0,500),  beside = TRUE)
+
+## Regardless of country, the consumer segment has the highest volume compared to corporate and home office. Standard class is also predominately higher than the other ship order types. Despite the fact that CA has higher volume, the type of ship orders and segment are consistent for both countries.
+```
+
   STEP 6 (Vishal)
 
   (35 points): Inferences Apply some inferential statistics techniques
@@ -233,7 +245,7 @@ analytics/modeling techniques covered in Week 10 and in your statistics courses.
 
 ```{r}
 ## Calculate mean by each category. Use the mean as a deciding factor in the logic. 
-
+View(group_project_data_nototal_final)
 byCountry <- group_project_data_nototal_final %>% group_by( Country) %>% summarise( Mean = mean(Price, na.rm =TRUE))
 byCountry 
 bySegment <- group_project_data_nototal_final %>% group_by( Segment) %>% summarise( Mean = mean(Price, na.rm =TRUE))
