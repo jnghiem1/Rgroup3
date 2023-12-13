@@ -4,6 +4,39 @@ author: "Julma Nghiem, Oye Oyegbami, Vishal Raina, Alvina Cheung"
 date: "`r Sys.Date()`"
 output: html_document
 ---
+## Overview and Structure
+This dataset offers a comprehensive view of  company's sales activities, meticulously structured to provide insights into customer behavior, sales efficiency, and market trends. It is organized into distinct categories based on customer segments – Consumer, Corporate, and Home Office – and further delineated by shipping modes, namely First Class, Same Day, Second Class, and Standard Class. This multi-faceted structure enables an in-depth analysis of sales patterns and operational dynamics.
+
+
+<<<<--Addtional input will replace it with findings->>>
+
+## Insights into Customer Segments
+
+The segmentation of sales data is particularly valuable. By differentiating between Consumers, Corporates, and Home Offices, the dataset reveals varying purchasing patterns and preferences. This segmentation allows us to understand the unique demands and expectations of each group, enabling us to tailor our products and services more effectively.
+
+## Shipping Modes and Operational Insights
+
+The inclusion of shipping modes in the dataset provides critical insights into logistical preferences and efficiencies. By analyzing sales across different shipping options, we can assess the effectiveness of our distribution channels and identify opportunities to optimize shipping logistics, ultimately enhancing customer satisfaction and operational cost-effectiveness.
+
+## Utility in Strategic Decision-Making
+
+This dataset is more than a collection of numbers; it is a tool for strategic decision-making. By leveraging the insights gained from this data, our company can make informed decisions about marketing strategies, product development, customer relationship management, and operational improvements.
+
+## Continuous Improvement and Market Adaptation
+
+The dynamic nature of the market demands continuous adaptation and improvement. This dataset serves as a baseline for monitoring changes in consumer behavior and market conditions, enabling our company to stay agile and responsive.
+
+
+
+
+
+
+
+
+
+
+
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
